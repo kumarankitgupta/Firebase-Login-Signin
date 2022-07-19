@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Setup</title>
+</head>
+<body>
+    <input type="text" id="email" placeholder="your email">
+    <input type="password" id="password" placeholder="your password">
+    <button id="submitData">Register</button>
+    <button id="loginData">Login</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyDzB1DMZiBhtCXlQld-fKo3wdgKp3376L4",
+        authDomain: "fir-frontend-897f0.firebaseapp.com",
+        projectId: "fir-frontend-897f0",
+        storageBucket: "fir-frontend-897f0.appspot.com",
+        messagingSenderId: "606044489879",
+        appId: "1:606044489879:web:60a54d3c9945d7784dc1d2"
+    };
+ 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        submitData.addEventListener('click',(e) =>{
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            createUserWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+            const user = userCredential.user;
+            alert("Signed in Successfully");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+        })
+        loginData.addEventListener('click',(e) =>{
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                alert('Login Successfully')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert("Invalid Email Or Password")
+            });
+        })
+        
+    </script>
+</body>
+</html>
